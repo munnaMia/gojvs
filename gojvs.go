@@ -20,3 +20,19 @@ func ForEach[T any](slice []T, fn func(T, int)) {
 		fn(value, idx)
 	}
 }
+
+// Find Function takes an slice and a callback function and returns true & the first
+// element in the provided array that satisfies the provided testing function else return
+// false & a zerovalue.
+func Find[T any](slice []T, fn func(T) bool) (T, bool) {
+	var Zerovalue T
+
+	for _, value := range slice {
+		if ok := fn(value); ok {
+			return value, true
+		}
+	}
+
+	return Zerovalue, false
+
+}
