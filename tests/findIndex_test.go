@@ -7,19 +7,17 @@ import (
 	h "github.com/munnaMia/gojvs/helper"
 )
 
-func TestFind(t *testing.T) {
+func TestFindIndex(t *testing.T) {
 	testsInt := []struct {
-		name         string
-		slice        []int
-		expectedInt  int
-		expectedBool bool
-		callback     func(int) bool
+		name        string
+		slice       []int
+		expectedInt int
+		callback    func(int) bool
 	}{
 		{
 			"Found at beginning",
 			[]int{1, 2, 3, 4, 5, 6, 7},
-			1,
-			true,
+			0,
 			func(a int) bool {
 				return a == 1
 			},
@@ -27,8 +25,7 @@ func TestFind(t *testing.T) {
 		{
 			"Not found",
 			[]int{1, 2, 3, 4, 5, 6, 7},
-			0,
-			false,
+			-1,
 			func(a int) bool {
 				return a == 8
 			},
@@ -36,8 +33,7 @@ func TestFind(t *testing.T) {
 		{
 			"Found at end",
 			[]int{1, 2, 3, 4, 5, 6, 7},
-			7,
-			true,
+			6,
 			func(a int) bool {
 				return a == 7
 			},
@@ -45,8 +41,7 @@ func TestFind(t *testing.T) {
 		{
 			"Empty slice",
 			[]int{},
-			0,
-			false,
+			-1,
 			func(a int) bool {
 				return a == 10
 			},
@@ -54,8 +49,7 @@ func TestFind(t *testing.T) {
 		{
 			"Find prime number",
 			[]int{12, 234, 5, 433, 42, 65, 210},
-			5,
-			true,
+			2,
 			func(a int) bool {
 				if a < 2 || a%2 == 0 {
 					return false
@@ -76,30 +70,26 @@ func TestFind(t *testing.T) {
 
 	for _, tt := range testsInt {
 		t.Run(tt.name, func(t *testing.T) {
-			gotInt, gotBool := gojvs.Find(tt.slice, tt.callback)
+			got := gojvs.FindIndex(tt.slice, tt.callback)
 
-			if !h.Equal(gotInt, tt.expectedInt) {
-				t.Errorf("Find() int - Want : %d & Got %d", tt.expectedInt, gotInt)
+			if !h.Equal(got, tt.expectedInt) {
+				t.Errorf("Find() int - Want : %d & Got %d", tt.expectedInt, got)
 			}
-			if !h.Equal(gotBool, tt.expectedBool) {
-				t.Errorf("Find() bool - Want : %t & Got %t", tt.expectedBool, gotBool)
-			}
+
 		})
 	}
 
 	// string test
 	testsString := []struct {
-		name           string
-		slice          []string
-		expectedString string
-		expectedBool   bool
-		callback       func(string) bool
+		name        string
+		slice       []string
+		expectedInt int
+		callback    func(string) bool
 	}{
 		{
 			"Found at beginning",
 			[]string{"apple", "orenge", "pinapple"},
-			"apple",
-			true,
+			0,
 			func(str string) bool {
 				return str == "apple"
 			},
@@ -107,8 +97,7 @@ func TestFind(t *testing.T) {
 		{
 			"Not found",
 			[]string{"apple", "orenge", "pinapple"},
-			"",
-			false,
+			-1,
 			func(str string) bool {
 				return str == "not found"
 			},
@@ -116,8 +105,7 @@ func TestFind(t *testing.T) {
 		{
 			"Found at end",
 			[]string{"apple", "orenge", "pinapple"},
-			"pinapple",
-			true,
+			2,
 			func(str string) bool {
 				return str == "pinapple"
 			},
@@ -125,8 +113,7 @@ func TestFind(t *testing.T) {
 		{
 			"Empty slice",
 			[]string{},
-			"",
-			false,
+			-1,
 			func(str string) bool {
 				return str == "10"
 			},
@@ -135,13 +122,10 @@ func TestFind(t *testing.T) {
 
 	for _, tt := range testsString {
 		t.Run(tt.name, func(t *testing.T) {
-			gotInt, gotBool := gojvs.Find(tt.slice, tt.callback)
+			got := gojvs.FindIndex(tt.slice, tt.callback)
 
-			if !h.Equal(gotInt, tt.expectedString) {
-				t.Errorf("Find() string - Want : %s & Got %s", tt.expectedString, gotInt)
-			}
-			if !h.Equal(gotBool, tt.expectedBool) {
-				t.Errorf("Find() bool - Want : %t & Got %t", tt.expectedBool, gotBool)
+			if !h.Equal(got, tt.expectedInt) {
+				t.Errorf("Find() string - Want : %d & Got %d", tt.expectedInt, got)
 			}
 		})
 	}
