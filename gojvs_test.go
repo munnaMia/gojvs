@@ -18,7 +18,7 @@ func TestMap(t *testing.T) {
 			[]int{2, 4, 6, 8, 100},
 			func() any {
 				slice := []int{1, 2, 3, 4, 50}
-				callback := func(a int) int {
+				callback := func(a,i int) int {
 					return a * 2
 				}
 				return gojvs.Map(slice, callback)
@@ -26,7 +26,7 @@ func TestMap(t *testing.T) {
 		},
 		{"Empty slice", []int{}, func() any {
 			slice := []int{}
-			callback := func(a int) int {
+			callback := func(a,i int) int {
 				return a
 			}
 			return gojvs.Map(slice, callback)
@@ -34,7 +34,7 @@ func TestMap(t *testing.T) {
 		{"Converte Float32 to a Int number",
 			[]int{1, 2, 3, 4, 5}, func() any {
 				slice := []float32{1.33, 2.432, 3.4, 4.35, 5.0}
-				callback := func(a float32) int {
+				callback := func(a float32, i int) int {
 					return int(a)
 				}
 				return gojvs.Map(slice, callback)
