@@ -2,10 +2,10 @@ package gojvs_test
 
 import (
 	"fmt"
-	"reflect"
 	"testing"
 
 	"github.com/munnaMia/gojvs"
+	h "github.com/munnaMia/gojvs/helper"
 )
 
 func TestMap(t *testing.T) {
@@ -18,7 +18,7 @@ func TestMap(t *testing.T) {
 			[]int{2, 4, 6, 8, 100},
 			func() any {
 				slice := []int{1, 2, 3, 4, 50}
-				callback := func(a,i int) int {
+				callback := func(a, i int) int {
 					return a * 2
 				}
 				return gojvs.Map(slice, callback)
@@ -26,7 +26,7 @@ func TestMap(t *testing.T) {
 		},
 		{"Empty slice", []int{}, func() any {
 			slice := []int{}
-			callback := func(a,i int) int {
+			callback := func(a, i int) int {
 				return a
 			}
 			return gojvs.Map(slice, callback)
@@ -46,7 +46,7 @@ func TestMap(t *testing.T) {
 
 			got := tt.runTest()
 
-			if !reflect.DeepEqual(got, tt.wantSlice) {
+			if !h.Equal(got, tt.wantSlice) {
 				t.Errorf("Map() got = %v, want %v", got, tt.wantSlice)
 			}
 		})
@@ -91,11 +91,11 @@ func TestForEach(t *testing.T) {
 			}
 			gojvs.ForEach(tt.slice, callback)
 
-			if !reflect.DeepEqual(actualSum, tt.expectedSum) {
+			if !h.Equal(actualSum, tt.expectedSum) {
 				t.Errorf("ForEach Sum mismatch - Expected : %d & Got : %d", tt.expectedSum, actualSum)
 			}
 
-			if !reflect.DeepEqual(actualCount, tt.expectedCount) {
+			if !h.Equal(actualCount, tt.expectedCount) {
 				t.Errorf("ForEach Count mismatch - Expected : %d & Got : %d", tt.expectedCount, actualCount)
 			}
 		})
@@ -133,7 +133,7 @@ func TestForEach(t *testing.T) {
 
 			gojvs.ForEach(tt.slice, callback)
 
-			if !reflect.DeepEqual(formatedSlice, tt.expectedSlice) {
+			if !h.Equal(formatedSlice, tt.expectedSlice) {
 				t.Errorf("ForEach Slice mismatch - Expected : %v & Got %v", tt.expectedSlice, formatedSlice)
 			}
 		})
@@ -211,10 +211,10 @@ func TestFind(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			gotInt, gotBool := gojvs.Find(tt.slice, tt.callback)
 
-			if !reflect.DeepEqual(gotInt, tt.expectedInt) {
+			if !h.Equal(gotInt, tt.expectedInt) {
 				t.Errorf("Find() int mismatch - Expected : %d & Got %d", tt.expectedInt, gotInt)
 			}
-			if !reflect.DeepEqual(gotBool, tt.expectedBool) {
+			if !h.Equal(gotBool, tt.expectedBool) {
 				t.Errorf("Find() bool mismatch - Expected : %t & Got %t", tt.expectedBool, gotBool)
 			}
 		})
@@ -270,13 +270,55 @@ func TestFind(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			gotInt, gotBool := gojvs.Find(tt.slice, tt.callback)
 
-			if !reflect.DeepEqual(gotInt, tt.expectedInt) {
+			if !h.Equal(gotInt, tt.expectedInt) {
 				t.Errorf("Find() string mismatch - Expected : %s & Got %s", tt.expectedInt, gotInt)
 			}
-			if !reflect.DeepEqual(gotBool, tt.expectedBool) {
+			if !h.Equal(gotBool, tt.expectedBool) {
 				t.Errorf("Find() bool mismatch - Expected : %t & Got %t", tt.expectedBool, gotBool)
 			}
 		})
 	}
 
+}
+
+func TestConcat(t *testing.T) {
+	tests := []struct {
+		name          string
+		inputSlices   [][]string
+		expectedSlice []string
+	}{
+		{
+			"Empty slices",
+			[][]string{},
+			[]string{},
+		},
+		{
+			"Simple collection of slices",
+			[][]string{
+				{"a", "b", "c"},
+				{"a", "b", "c"},
+				{"a", "b", "c"},
+			},
+			[]string{"a", "b", "c", "a", "b", "c", "a", "b", "c"},
+		},
+		{
+			"Mixed slices",
+			[][]string{
+				{"a", "b", "c"},
+				{},
+				{"ac", "bd", "ca"},
+			},
+			[]string{"a", "b", "c", "ac", "bd", "ca"},
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			got := gojvs.Concat(tt.inputSlices...)
+
+			if !h.Equal(tt.expectedSlice, got) {
+				t.Errorf("Concat slices mismatch - Expected %v & Got %v", tt.expectedSlice, got)
+			}
+		})
+	}
 }
