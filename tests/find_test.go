@@ -56,21 +56,7 @@ func TestFind(t *testing.T) {
 			[]int{12, 234, 5, 433, 42, 65, 210},
 			5,
 			true,
-			func(a int) bool {
-				if a < 2 || a%2 == 0 {
-					return false
-				}
-				if a%2 == 0 {
-					return a == 2
-				}
-
-				for factor := 3; factor*factor <= a; factor += 2 {
-					if a%factor == 0 {
-						return false
-					}
-				}
-				return true
-			},
+			h.IsPrime,
 		},
 	}
 
