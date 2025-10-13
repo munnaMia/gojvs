@@ -37,13 +37,21 @@ func Find[T any](slice []T, fn func(T) bool) (T, bool) {
 
 }
 
-// The Concat function combines a collection of slices, flattening them into one unified slice.
+// The Concat function combines a collection of slices, flattening them into one 
+// unified slice.
 func Concat[T any](slices ...[]T) []T {
 
-	sliceContainer := make([]T, 0) 
+	sliceContainer := make([]T, 0)
 	for _, slice := range slices {
 		sliceContainer = append(sliceContainer, slice...)
 	}
 
 	return sliceContainer
+}
+
+//The push() function  adds the specified elements to the end of an slice and returns 
+// the new length of the slice.
+func Push[T any](slice *[]T, elems ...T) int {
+	*slice = append(*slice, elems...)
+	return len(*slice)
 }
