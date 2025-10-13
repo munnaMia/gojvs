@@ -12,6 +12,20 @@ func Map[T any, R any](slice []T, fn func(T, int) R) []R {
 	return newSlice
 }
 
+// The filter() function creates a shallow copy of a portion
+// of a given slice, filtered down to just the elements from
+// the given slice that pass the test implemented by the
+// provided function.
+func Filter[T any](slice []T, fn func(T) bool) []T {
+	filterSlice := make([]T, 0, cap(slice))
+	for _, value := range slice {
+		if ok := fn(value); ok {
+			filterSlice = append(filterSlice, value)
+		}
+	}
+	return filterSlice
+}
+
 // ForEach function takes an slice and a callback function with two arguments.
 // Apply the callback function for each element in the slice.
 // The callback function take a value and index like (T-> value, int-> index)
