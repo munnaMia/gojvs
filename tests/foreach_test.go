@@ -47,11 +47,11 @@ func TestForEach(t *testing.T) {
 			gojvs.ForEach(tt.slice, callback)
 
 			if !h.Equal(actualSum, tt.expectedSum) {
-				t.Errorf("ForEach Sum mismatch - Expected : %d & Got : %d", tt.expectedSum, actualSum)
+				t.Errorf("ForEach Sum - Want : %d & Got : %d", tt.expectedSum, actualSum)
 			}
 
 			if !h.Equal(actualCount, tt.expectedCount) {
-				t.Errorf("ForEach Count mismatch - Expected : %d & Got : %d", tt.expectedCount, actualCount)
+				t.Errorf("ForEach Count - Want : %d & Got : %d", tt.expectedCount, actualCount)
 			}
 		})
 	}
@@ -89,7 +89,7 @@ func TestForEach(t *testing.T) {
 			gojvs.ForEach(tt.slice, callback)
 
 			if !h.Equal(formatedSlice, tt.expectedSlice) {
-				t.Errorf("ForEach Slice mismatch - Expected : %v & Got %v", tt.expectedSlice, formatedSlice)
+				t.Errorf("ForEach Slice - Want : %v & Got %v", tt.expectedSlice, formatedSlice)
 			}
 		})
 	}

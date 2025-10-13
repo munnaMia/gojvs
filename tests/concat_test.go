@@ -43,7 +43,7 @@ func TestConcat(t *testing.T) {
 			got := gojvs.Concat(tt.inputSlices...)
 
 			if !h.Equal(tt.expectedSlice, got) {
-				t.Errorf("Concat slices mismatch - Expected %v & Got %v", tt.expectedSlice, got)
+				t.Errorf("Concat slices - Want %v & Got %v", tt.expectedSlice, got)
 			}
 		})
 	}

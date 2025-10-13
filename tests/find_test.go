@@ -79,10 +79,10 @@ func TestFind(t *testing.T) {
 			gotInt, gotBool := gojvs.Find(tt.slice, tt.callback)
 
 			if !h.Equal(gotInt, tt.expectedInt) {
-				t.Errorf("Find() int mismatch - Expected : %d & Got %d", tt.expectedInt, gotInt)
+				t.Errorf("Find() int - Want : %d & Got %d", tt.expectedInt, gotInt)
 			}
 			if !h.Equal(gotBool, tt.expectedBool) {
-				t.Errorf("Find() bool mismatch - Expected : %t & Got %t", tt.expectedBool, gotBool)
+				t.Errorf("Find() bool - Want : %t & Got %t", tt.expectedBool, gotBool)
 			}
 		})
 	}
@@ -138,10 +138,10 @@ func TestFind(t *testing.T) {
 			gotInt, gotBool := gojvs.Find(tt.slice, tt.callback)
 
 			if !h.Equal(gotInt, tt.expectedInt) {
-				t.Errorf("Find() string mismatch - Expected : %s & Got %s", tt.expectedInt, gotInt)
+				t.Errorf("Find() string - Want : %s & Got %s", tt.expectedInt, gotInt)
 			}
 			if !h.Equal(gotBool, tt.expectedBool) {
-				t.Errorf("Find() bool mismatch - Expected : %t & Got %t", tt.expectedBool, gotBool)
+				t.Errorf("Find() bool - Want : %t & Got %t", tt.expectedBool, gotBool)
 			}
 		})
 	}
