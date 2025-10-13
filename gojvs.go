@@ -2,11 +2,11 @@ package gojvs
 
 // Map function takes an Slice and a callback function.
 // It's modify slice element and return a new modified slice.
-func Map[T any, R any](slice []T, fn func(T) R) []R {
+func Map[T any, R any](slice []T, fn func(T, int) R) []R {
 	newSlice := make([]R, len(slice))
 
 	for idx, value := range slice {
-		newSlice[idx] = fn(value)
+		newSlice[idx] = fn(value, idx)
 	}
 
 	return newSlice
