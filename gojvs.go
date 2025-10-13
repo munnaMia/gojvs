@@ -37,6 +37,21 @@ func Find[T any](slice []T, fn func(T) bool) (T, bool) {
 
 }
 
+// The findIndex() function returns the index of the first element in an
+// array that satisfies the provided testing function. If no elements
+// satisfy the testing function, -1 is returned.
+func FindIndex[T any](slice []T, fn func(T) bool) int {
+
+	for idx, value := range slice {
+		if ok := fn(value); ok {
+			return idx
+		}
+	}
+
+	return -1
+
+}
+
 // The FindLastIndex() function iterates the slice in reverse order and
 // returns the index of the first element that satisfies the provided
 // testing function. If no elements satisfy the testing function, -1 is
