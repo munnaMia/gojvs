@@ -37,7 +37,23 @@ func Find[T any](slice []T, fn func(T) bool) (T, bool) {
 
 }
 
-// The Concat function combines a collection of slices, flattening them into one 
+// The FindLastIndex() function iterates the slice in reverse order and
+// returns the index of the first element that satisfies the provided
+// testing function. If no elements satisfy the testing function, -1 is
+// returned.
+func FindLastIndex[T any](slice []T, fn func(T) bool) int {
+
+	for idx := len(slice) - 1; idx >= 0; idx-- {
+		if ok := fn(slice[idx]); ok {
+			return idx
+		}
+	}
+
+	return -1
+
+}
+
+// The Concat function combines a collection of slices, flattening them into one
 // unified slice.
 func Concat[T any](slices ...[]T) []T {
 
@@ -49,7 +65,7 @@ func Concat[T any](slices ...[]T) []T {
 	return sliceContainer
 }
 
-//The push() function  adds the specified elements to the end of an slice and returns 
+// The push() function  adds the specified elements to the end of an slice and returns
 // the new length of the slice.
 func Push[T any](slice *[]T, elems ...T) int {
 	*slice = append(*slice, elems...)
