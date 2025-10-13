@@ -52,6 +52,22 @@ func FindIndex[T any](slice []T, fn func(T) bool) int {
 
 }
 
+// FindLast  function iterates the slice in reverse order. It takes an
+// slice and a callback function and returns true & the first
+// element in the provided array that satisfies the provided testing
+// function else return false & a zerovalue.
+func FindLast[T any](slice []T, fn func(T) bool) (T, bool) {
+	var Zerovalue T
+
+	for idx := len(slice) - 1; idx >= 0; idx-- {
+		if ok := fn(slice[idx]); ok {
+			return slice[idx], true
+		}
+	}
+
+	return Zerovalue, false
+}
+
 // The FindLastIndex() function iterates the slice in reverse order and
 // returns the index of the first element that satisfies the provided
 // testing function. If no elements satisfy the testing function, -1 is
