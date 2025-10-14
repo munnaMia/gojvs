@@ -116,3 +116,16 @@ func Push[T any](slice *[]T, elems ...T) int {
 	*slice = append(*slice, elems...)
 	return len(*slice)
 }
+
+func Reverse[T any](slice []T) []T {
+	length := len(slice)
+
+	reverseSlice := make([]T, 0, length)
+
+	for idx := length - 1; idx >= 0; idx-- {
+		reverseSlice = append(reverseSlice, slice[idx])
+	}
+
+	return reverseSlice
+
+}
