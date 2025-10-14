@@ -117,8 +117,8 @@ func Push[T any](slice *[]T, elems ...T) int {
 	return len(*slice)
 }
 
-// The ToReverse() Function reverses an slice  and returns a new slice, the given 
-// slice element now becoming the last, and the last slice element becoming the 
+// The ToReverse() Function reverses an slice  and returns a new slice, the given
+// slice element now becoming the last, and the last slice element becoming the
 // first into the new slice.
 func ToReverse[T any](slice []T) []T {
 	length := len(slice)
@@ -130,5 +130,21 @@ func ToReverse[T any](slice []T) []T {
 	}
 
 	return reverseSlice
+
+}
+
+// The shift() Function removes the first element from an slice and returns that
+// removed element.
+func Shift[T any](slice *[]T) T {
+	var firstElem T
+	if len(*slice) == 0 {
+
+		return firstElem
+	}
+
+	firstElem = (*slice)[0]
+	*slice = (*slice)[1:]
+
+	return firstElem
 
 }
