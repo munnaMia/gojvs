@@ -1,5 +1,9 @@
 package gojvs
 
+import (
+	"fmt"
+)
+
 // Map function takes an Slice and a callback function.
 // It's modify slice element and return a new modified slice.
 func Map[T any, R any](slice []T, fn func(T, int) R) []R {
@@ -174,4 +178,46 @@ func Some[T any](slice []T, fn func(T) bool) bool {
 		}
 	}
 	return false
+}
+
+// The copyWithin() function shallow copies part of this slice to another location in the
+// same slice and returns this slice without modifying its length. to avoid panics we use
+// explicit error handling. handle errors carefully.
+func CopyWithIn[T any](slice *[]T, pos, start, end int) error {
+	if pos < 0 {
+		return fmt.Errorf("there is a value: %d, is less then: 0", pos)
+	}
+	if start < 0 {
+		return fmt.Errorf("there is a value: %d, is less then: 0", start)
+	}
+	if end < 0 {
+		return fmt.Errorf("there is a value: %d, is less then: 0", end)
+	}
+
+	// If the end position is greater then the length it will cause an error
+	if end > len(*slice) {
+		return fmt.Errorf("end position: %d, is greater then the actual length: %d of the slice", end, len(*slice))
+	}
+
+	if start > end {
+		return fmt.Errorf("start position: %d is less then end position: %d", start, end)
+	}
+
+	// To avoid ref issue in slice create a new slice on a different location on the memory.
+	tempSlice := make([]T, 0, end-start)
+
+	for start < end {
+		tempSlice = append(tempSlice, (*slice)[start])
+		start++
+	}
+
+	for idx, value := range tempSlice {
+		if idx + pos < len(*slice){
+			(*slice)[pos+idx] = value
+		}else{
+			return nil
+		}
+	}
+
+	return nil
 }
