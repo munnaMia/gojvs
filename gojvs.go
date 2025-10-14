@@ -117,7 +117,10 @@ func Push[T any](slice *[]T, elems ...T) int {
 	return len(*slice)
 }
 
-func Reverse[T any](slice []T) []T {
+// The ToReverse() Function reverses an slice  and returns a new slice, the given 
+// slice element now becoming the last, and the last slice element becoming the 
+// first into the new slice.
+func ToReverse[T any](slice []T) []T {
 	length := len(slice)
 
 	reverseSlice := make([]T, 0, length)
