@@ -148,3 +148,14 @@ func Shift[T any](slice *[]T) T {
 	return firstElem
 
 }
+
+// The some() function returns true if it finds one element in the slice that satisfies
+// the provided testing function. Otherwise, it returns false.
+func Some[T any](slice []T, fn func(T) bool) bool {
+	for _, value := range slice {
+		if ok := fn(value); ok {
+			return true
+		}
+	}
+	return false
+}
