@@ -117,6 +117,22 @@ func Push[T any](slice *[]T, elems ...T) int {
 	return len(*slice)
 }
 
+// The shift() Function removes the last element from an slice and returns that
+// removed element.
+func Pop[T any](slice *[]T) T {
+	var lastElem T
+	if len(*slice) == 0 {
+
+		return lastElem
+	}
+
+	lastElem = (*slice)[len(*slice)-1]
+	*slice = (*slice)[:len(*slice)-1]
+
+	return lastElem
+
+}
+
 // The ToReverse() Function reverses an slice  and returns a new slice, the given
 // slice element now becoming the last, and the last slice element becoming the
 // first into the new slice.
