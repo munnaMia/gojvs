@@ -212,12 +212,37 @@ func CopyWithIn[T any](slice *[]T, pos, start, end int) error {
 	}
 
 	for idx, value := range tempSlice {
-		if idx + pos < len(*slice){
+		if idx+pos < len(*slice) {
 			(*slice)[pos+idx] = value
-		}else{
+		} else {
 			return nil
 		}
 	}
 
 	return nil
+}
+
+// The Fill() function changes all elements within a range of indices in an slice
+// to a static value. And modified the actual slice.
+func Fill[T any](slice *[]T, element T, start, end int) error {
+	if start < 0 {
+		return fmt.Errorf("start value: %d, is less then: 0", start)
+	}
+	if end < 0 {
+		return fmt.Errorf("end value: %d, is less then: 0", end)
+	}
+	if start > end {
+		return fmt.Errorf("start position: %d is less then end position: %d", start, end)
+	}
+	if end > len(*slice) {
+		return fmt.Errorf("end position: %d, is greater then the actual length: %d of the slice", end, len(*slice))
+	}
+
+	for start < end {
+		(*slice)[start] = element
+		start++
+	}
+
+	return nil
+
 }
